@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JUnit Jupiter API for testing
+    // implementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+
+    // Selenium Java for browser automation
+    implementation 'org.seleniumhq.selenium:selenium-java:4.11.0'
+
+    // TestNG for testing
+    testImplementation 'org.testng:testng:7.4.0'
+}
+
+test {
+    useTestNG() {
+        suites 'src/test/resources/testng.xml'
+        // useDefaultListeners = true
+    }
+    // Display the following test events
+    testLogging {
+       events 'started', 'passed', 'skipped', 'failed'
+
+        // Configure the logging level for test events
+        showExceptions true
+        showStackTraces true
+        showStandardStreams true
+
+        // Set the log level for test events (DEBUG, INFO, WARN, etc.)
+        // Can be overridden from command line using `-Dorg.gradle.logging.level`
+        exceptionFormat 'full'
+        showCauses true
+        showExceptions true
+
+        // Log test summary after execution
+        afterSuite { desc, result ->
+            logger.lifecycle("Test summary for ${desc.displayName}, result: ${result.resultType}")
+        }
+    }
+}
+
+application {
+    // Specify the main class for the application plugin
+    mainClass = 'demo.TestCases'
+}
